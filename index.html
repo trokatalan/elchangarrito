@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e99140">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            background-image: url('fondoblanco.webp');
+            background-position: center;
+            background-attachment: fixed;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+        
+
+        }
+        .contenedor-principal {
+    background-color: rgba(255,255,255,0.9);
+    width: 95%;
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: justify;
+}
+
+        h1 {
+        color:#f50303;
+        text-align: center;
+        font-family: sans-serif;}
+        p {
+            color:#dd8501;
+            text-align: center;
+        }
+        img {
+        display: block;
+        margin: 20px auto;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        width: 80%;
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+        }
+     
+        #menu-pedidos {
+    background-color: white;
+    padding: 35px;
+    border-radius: 10px;
+    max-width: 100%;
+    width: 100%;
+    margin: 35px auto;
+    text-align: left;
+    
+}
+.item-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+    gap: 10px;
+}
+.item-menu label {
+    width: 80px;
+}
+input[type="number"] {
+    width: 60px;
+}
+textarea {
+    width: 100%;
+    margin-top: 25px;
+}
+    button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #e99140f1;
+            color: rgb(241, 234, 234);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+    button-hover {
+            background-color: #d17d2a;
+    }
+
+.producto-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.precio {
+    color: #e99140;
+    font-weight: bold;
+    font-size: 0.9em;
+    min-width: 60px;
+}
+
+.btn-agregar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.btn-agregar:hover {
+    background-color: #45a049;
+}
+
+.carrito-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #e99140;
+}
+
+.carrito-items {
+    margin: 15px 0;
+}
+
+.item-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-carrito:last-child {
+    border-bottom: none;
+}
+
+.item-info {
+    flex: 2;
+}
+
+.item-cantidad {
+    font-weight: bold;
+    color: #e99140;
+    margin: 0 10px;
+}
+
+.item-precio {
+    flex: 1;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.btn-eliminar-item {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.btn-eliminar-item:hover {
+    background-color: #cc0000;
+}
+
+.carrito-total {
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 2px solid #e99140;
+    text-align: right;
+    font-size: 1.2em;
+}
+
+.carrito-acciones {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-vaciar {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn-vaciar:hover {
+    background-color: #cc0000;
+}
+
+.btn-enviar {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-enviar:hover {
+    background-color: #128C7E;
+}
+
+.carrito-vacio {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
+}
+
+@media (max-width: 480px) {
+    .producto-control {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .carrito-acciones {
+        flex-direction: column;
+    }
+    
+    .btn-vaciar, .btn-enviar {
+        width: 100%;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="contenedor-principal">
+    <h1>Bienvenidos al Changarrito Mexicano!</h1>
+    <p> La verdadera comida Mexicana</p>
+    
+    <img src="comida.jpeg">
+    
+    <div id="menu-pedidos">
+    <h3>Nuestro Menú</h3>
+
+    <div class="item-menu">
+        <label> Tacos</label>
+        <div class="producto-control">
+            <span class="precio">$4.00 c/u</span>
+            <input type="number" id="tacos" min="0" value="0" class="cantidad-producto" data-producto="tacos" data-precio="4.50">
+            <button class="btn-agregar" data-producto="tacos">➕ Agregar</button>
+        </div>
+    </div>
+    
+    <div class="item-menu">
+        <label> Tortas</label>
+        <div class="producto-control">
+            <span class="precio">$4.50 c/u</span>
+            <input type="number" id="tortas" min="0" value="0" class="cantidad-producto" data-producto="tortas" data-precio="4.50">
+            <button class="btn-agregar" data-producto="tortas">➕ Agregar</button>
+        </div>
+    </div>
+
+    <div class="item-menu">
+        <label> Nachos</label>
+        <div class="producto-control">
+            <span class="precio">$5.50 c/u</span>
+            <input type="number" id="nachos" min="0" value="0" class="cantidad-producto" data-producto="nachos" data-precio="5.50">
+            <button class="btn-agregar" data-producto="nachos">➕ Agregar</button>
+        </div>
+    </div> 
+    
+    <div class="item-menu">
+        <label> Gringas</label>
+        <div class="producto-control">
+            <span class="precio">$5 c/u</span>
+            <input type="number" id="gringas" min="0" value="0" class="cantidad-producto" data-producto="gringas" data-precio="5">
+            <button class="btn-agregar" data-producto="gringas">➕ Agregar</button>
+        </div>
+    </div>
+
+
+     <div class="item-menu">
+        <label> Burritos</label>
+        <div class="producto-control">
+            <span class="precio">$5.25 c/u</span>
+            <input type="number" id="burritos" min="0" value="0" class="cantidad-producto" data-producto="burritos" data-precio="5.25">
+            <button class="btn-agregar" data-producto="burritos">➕ Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    <label>📝 Comentarios adicionales:</label><br>
+    <textarea id="comentario" rows="3" placeholder="Ej. Sin cebolla, sin cilantro, etc..."></textarea>
+
+    <div class="cliente-info">
+        <h4>📋 Tus datos (para contacto)</h4>
+        <input type="text" id="cliente-nombre" placeholder="Tu nombre" required>
+        <input type="tel" id="cliente-telefono" placeholder="WhatsApp / Teléfono" required>
+    </div>
+
+    <div class="carrito-container">
+        <h4>🛒 Tu pedido actual</h4>
+        <div id="carrito-vacio" class="carrito-vacio">
+            Tu carrito está vacío. Agrega productos del menú.
+        </div>
+        <div id="carrito-items" class="carrito-items" style="display: none;"></div>
+        
+        <div class="carrito-total" id="carrito-total" style="display: none;">
+            <strong>Total: $<span id="total-pagar">0</span></strong>
+        </div>
+        
+        <div class="carrito-acciones" id="carrito-acciones" style="display: none;">
+            <button class="btn-vaciar" id="vaciar-carrito">🗑️ Vaciar carrito</button>
+            <button class="btn-enviar" id="enviar-pedido">📱 Enviar pedido por WhatsApp</button>
+        </div>
+         </div>
+          </div>
+    </div>
+
+    <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+
+let carrito = [];
+
+const carritoVacio = document.getElementById('carrito-vacio');
+const carritoItems = document.getElementById('carrito-items');
+const carritoTotal = document.getElementById('carrito-total');
+const carritoAcciones = document.getElementById('carrito-acciones');
+const totalPagar = document.getElementById('total-pagar');
+const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
+
+document.addEventListener('DOMContentLoaded', function() {
+    const carritoGuardado = localStorage.getItem('carritoChangarrito');
+    if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+        actualizarCarrito();
+    }
+});
+
+function agregarAlCarrito(producto, cantidad, precio, nombreProducto) {
+    if (cantidad <= 0) {
+        alert('❌ Selecciona una cantidad mayor a 0');
+        return;
+    }
+    
+    const existente = carrito.find(item => item.producto === producto);
+    
+    if (existente) {
+        existente.cantidad = parseInt(existente.cantidad) + parseInt(cantidad);
+        existente.subtotal = existente.cantidad * existente.precio;
+    } else {
+        carrito.push({
+            producto: producto,
+            nombre: nombreProducto,
+            cantidad: parseInt(cantidad),
+            precio: precio,
+            subtotal: cantidad * precio
+        });
+    }
+    
+    document.getElementById(producto).value = 0;
+    
+    actualizarCarrito();
+    guardarCarritoLocal();
+    
+    mostrarNotificacion(`✅ ${cantidad} ${nombreProducto}(s) agregado(s)`);
+}
+
+function eliminarDelCarrito(producto) {
+    carrito = carrito.filter(item => item.producto !== producto);
+    actualizarCarrito();
+    guardarCarritoLocal();
+    mostrarNotificacion('🗑️ Producto eliminado');
+}
+
+function vaciarCarrito() {
+    if (carrito.length > 0 && confirm('¿Estás seguro de vaciar tu carrito?')) {
+        carrito = [];
+        actualizarCarrito();
+        guardarCarritoLocal();
+        mostrarNotificacion('🛒 Carrito vaciado');
+    }
+}
+
+function actualizarCarrito() {
+    if (carrito.length === 0) {
+        carritoVacio.style.display = 'block';
+        carritoItems.style.display = 'none';
+        carritoTotal.style.display = 'none';
+        carritoAcciones.style.display = 'none';
+        return;
+    }
+    
+    carritoVacio.style.display = 'none';
+    carritoItems.style.display = 'block';
+    carritoTotal.style.display = 'block';
+    carritoAcciones.style.display = 'flex';
+    
+    let html = '';
+    let total = 0;
+    
+    carrito.forEach(item => {
+        total += item.subtotal;
+        html += `
+            <div class="item-carrito">
+                <span class="item-info">
+                    <strong>${item.nombre}</strong>
+                </span>
+                <span class="item-cantidad">${item.cantidad}</span>
+                <span class="item-precio">$${item.subtotal}</span>
+                <button class="btn-eliminar-item" onclick="eliminarDelCarrito('${item.producto}')">✖</button>
+            </div>
+        `;
+    });
+    
+    carritoItems.innerHTML = html;
+    totalPagar.textContent = total;
+}
+
+function guardarCarritoLocal() {
+    localStorage.setItem('carritoChangarrito', JSON.stringify(carrito));
+}
+
+function mostrarNotificacion(mensaje) {
+    const notificacion = document.createElement('div');
+    notificacion.textContent = mensaje;
+    notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        animation: slideIn 0.3s;
+    `;
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+        notificacion.remove();
+    }, 2000);
+}
+
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+document.querySelectorAll('.btn-agregar').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const producto = this.dataset.producto;
+        const input = document.getElementById(producto);
+        const cantidad = input.value;
+        const precio = parseFloat(input.dataset.precio);
+        
+        const nombres = {
+            'tacos': 'Taco',
+            'tortas': 'Torta',
+            'nachos': 'Nachos',
+            'gringas': 'Gringas',
+            'burritos': 'Burritos',
+        };
+        
+        agregarAlCarrito(producto, cantidad, precio, nombres[producto]);
+    });
+});
+
+if (vaciarCarritoBtn) {
+    vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+}
+
+document.getElementById('enviar-pedido').addEventListener('click', function() {
+    if (carrito.length === 0) {
+        alert('❌ Tu carrito está vacío');
+        return;
+    }
+    
+    const nombre = document.getElementById('cliente-nombre').value;
+    const telefono = document.getElementById('cliente-telefono').value;
+    const comentario = document.getElementById('comentario').value;
+    
+    if (!nombre || !telefono) {
+        alert('❌ Por favor ingresa tu nombre y teléfono');
+        return;
+    }
+    
+    const total = carrito.reduce((sum, item) => sum + item.subtotal, 0);
+    
+    let mensaje = "🍽️ *NUEVO PEDIDO - CHANGARRITO MEXICANO*\n";
+    mensaje += "─────────────────────\n\n";
+    
+    mensaje += "👤 *Cliente:* " + nombre + "\n";
+    mensaje += "📱 *Teléfono:* " + telefono + "\n\n";
+    
+    mensaje += "📋 *PRODUCTOS (para retirar):*\n";
+    carrito.forEach(item => {
+        mensaje += `🔸 ${item.nombre}: ${item.cantidad} x $${item.precio} = $${item.subtotal}\n`;
+    });
+    
+    mensaje += "─────────────────────\n";
+    mensaje += "💰 *Total a pagar: $" + total + "*\n\n";
+    
+    if (comentario.trim() !== "") {
+        mensaje += "📝 *Nota:* " + comentario + "\n\n";
+    }
+    
+    mensaje += "⏱️ *Tiempo estimado:* 15-20 minutos\n";
+    mensaje += "📍 *Retirar en:* [Tu dirección aquí]\n\n";
+    mensaje += "⏰ *Pedido realizado:* " + new Date().toLocaleString() + "\n";
+    mensaje += "🙏 ¡Te esperamos!";
+    
+    const numeroWhatsApp = "50361943046";
+    
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    
+    if (confirm('¿Vaciar carrito después de enviar el pedido?')) {
+        vaciarCarrito();
+    }
+});
+</script>
+    
+   </body>
+</html>
