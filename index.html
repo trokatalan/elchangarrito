@@ -290,6 +290,15 @@ textarea {
         </div>
     </div>
 
+    <div class="item-menu">
+        <label> Enchiladas</label>
+        <div class="producto-control">
+            <span class="precio">$4.50 c/u</span>
+            <input type="number" id="enchiladas" min="0" value="0" class="cantidad-producto" data-producto="enchiladas" data-precio="4.50">
+            <button class="btn-agregar" data-producto="enchiladas">➕ Agregar</button>
+        </div>
+    </div>
+
 
      <div class="item-menu">
         <label> Burritos</label>
@@ -483,6 +492,7 @@ document.querySelectorAll('.btn-agregar').forEach(btn => {
             'tortas': 'Torta',
             'nachos': 'Nachos',
             'gringas': 'Gringas',
+            'enchiladas': 'Enchiladas',
             'burritos': 'Burritos',
         };
         
