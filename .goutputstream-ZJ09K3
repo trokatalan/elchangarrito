@@ -1,0 +1,49 @@
+{
+  "name": "Changarrito Mexicano",
+  "short_name": "Changarrito",
+  "description": "Pide tu comida mexicana favorita",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e99140",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
+Archivo 2: sw.js (Service Worker básico)
+javascript
+
+// sw.js - Permite que funcione offline
+const CACHE_NAME = 'changarrito-v1';
+const urlsToCache = [
+  './',
+  './index.html',
+  './comida.jpeg',
+  './fondoblanco.webp'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+  );
+});
